@@ -40,7 +40,6 @@ export const UpdateBlog=async(req,res)=>{
     })
 }
 export const deleteMyBlog=async(req,res)=>{
-    // const {title,description,imgUrl}=req.body
     const id=req.params.id;
     const blog= await Blog.findById(id);
     if(!blog){
@@ -56,5 +55,35 @@ export const deleteMyBlog=async(req,res)=>{
         success:true,
         message:"Blog deleted",
        
+    })
+}
+export const getAllBlogs=async(req,res)=>{
+    const blogs= await Blog.find();
+    if(!blogs){
+        return res.status(404).json({
+            success:false,
+            message:"No blogs added yet"
+        })
+    }
+    return res.status(200).json({
+        success:true,
+        message:"All blogs",
+        blogs
+    })
+}
+export const getBlogbyID=async(req,res)=>{
+    const id=req.params.id;
+    const blog= await Blog.findById(id);
+    if(!blog){
+        return res.status(404).json({
+            success:false,
+            message:"Invalid ID"
+        })
+    }
+    
+    return res.status(200).json({
+        success:true,
+        message:"Here is the Blog",
+        blog
     })
 }
