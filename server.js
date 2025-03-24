@@ -19,11 +19,13 @@ app.use(cookieParser());
 // 🔹 Ensure CORS is properly configured
 app.use(
     cors({
-        origin: process.env.FRONTEND_URL, 
+        origin: process.env.FRONTEND_URL,  
         methods: ["POST", "GET", "PUT", "DELETE"],
         credentials: true, 
+        allowedHeaders: ["Content-Type", "Authorization"], 
     })
 );
+
 
 // 🔹 Connect to MongoDB
 mongoose
