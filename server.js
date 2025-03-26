@@ -1,8 +1,8 @@
 import express from 'express'
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
-import userRouter from './routes/user.js'
-import blogRouter from './routes/blog.js'
+import userRouter from './Routes/user.js'
+import blogRouter from './Routes/blog.js'
 import { config } from 'dotenv';
 import cors from 'cors'
 
