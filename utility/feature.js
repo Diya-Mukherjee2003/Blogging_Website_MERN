@@ -1,20 +1,18 @@
-import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken"
 
-export const generatecookie = (user, res, statusCode = 200, message) => {
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+export const generateCookie = (user,res,statusCode=200,message)=>{
+    const token = jwt.sign({_id:user._id},process.env.JWT_SECRET)
+    // const token = jwt.sign({user},'!@#$%^&*()')
+  
+    // console.log(token)
 
-    console.log("Generated Token:", token);
-
-    res.status(statusCode)
-      .cookie("token", token, {
-        httpOnly: true,
-        maxAge: 10 * 60 * 1000,  // 10 minutes
-        sameSite: "None",  // Required for cross-origin cookies
-        secure: true,  // Required for SameSite=None (must be https)
-        domain: ".onrender.com"  // Change to match backend deployment domain
-      })
-      .json({
-        success: true,
+    res.status(201).cookie("token",token,{
+        httpOnly:true,
+        maxAge:10*60*1000,
+        sameSite:process.env.NODE_ENV === "Develpoment" ? "lax":"none",
+        secure:process.env.NODE_ENV === "Develpoment"?false:true
+    }).json({
+        success:true,
         message
-      });
-};
+    })
+}
