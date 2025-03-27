@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import {User} from '../models/UserModel.js'
-import { generatecookie } from "../utility/feature.js"
+import {generateCookie} from '../utility/feature.js'
 
 export const userRegister=async(req,res)=>{
     const {name,email,password}=req.body
@@ -19,7 +19,8 @@ export const userRegister=async(req,res)=>{
         email,
         password:hashPassword
     })
-    generatecookie(user,res,201,"User register successfully!")
+    generateCookie(user,res,201,"User register successfully!")
+    console.log("Response Headers:", res.getHeaders());
 }
 
 export const userLogin=async(req,res)=>{
@@ -38,7 +39,8 @@ export const userLogin=async(req,res)=>{
         success:false,
         message:"Invalid credential"
     })
-    generatecookie(user,res,201,`Welcome back ${user.name}`)
+    generateCookie(user,res,201,`Welcome back ${user.name}`)
+    console.log("Response Headers:", res.getHeaders());
     
 }
 export const Logout=(req,res)=>{
