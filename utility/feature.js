@@ -7,20 +7,18 @@ export const generateCookie = (user,res,statusCode=200,message)=>{
     console.log("Generated Token:", token);
 
 
-    res.status(201)
+    res.status(statusCode)
     .cookie("token", token, {
-         httpOnly: true,
-         secure: true,   // ✅ Required for SameSite=None (Must be on HTTPS)
-         sameSite: "None",
-         path: "/",           // Ensure it's accessible on all routes
-         domain: "https://blogging-website-mern-e4ai.onrender.com",  // ✅ Allows cross-origin cookies
-         maxAge: 24* 10 * 60 * 1000  // 10 minutes
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",  // ✅ Only secure in production
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        path: "/",      
+        domain: process.env.NODE_ENV === "production" ? "blogging-website-mern-e4ai.onrender.com" : undefined,  // Remove domain for local testing
+        maxAge: 10 * 60 * 1000  // 10 minutes
     })
     .json({
-         success: true,
-         message: "Login successful",
+        success: true,
+        message: message || "Login successful",
     });
- 
 
-    
 }
